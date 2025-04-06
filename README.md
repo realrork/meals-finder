@@ -6,3 +6,4 @@ App for finding recipes.
 - Milosz Borowiecki
 - Dominik Niedostatkiewicz
 - Kacper Gorlewicz
+- Karol Chruzik
