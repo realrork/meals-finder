@@ -1,6 +1,8 @@
-This repository contains a code for group project of WSB Academy students.
+This repository contains a code for group project of students.
 # meals-finder
 App for finding recipes.
 
-dopisz
-Karol Chruzik
+## Project Team
+- Milosz Borowiecki
+- Dominik Niedostatkiewicz
+- Karol Chruzik
