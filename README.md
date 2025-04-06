@@ -4,3 +4,4 @@ App for finding recipes.
 
 ## Project Team
 - Milosz Borowiecki
+- Dominik Niedostatkiewicz
