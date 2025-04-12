@@ -2,7 +2,13 @@
 
 ## Run Requiremnts
 * Golang 1.24.2 or higher
-* Self created .env file
+* Self created .env file with fields:
+    - APP_PORT
+    - DB_HOST
+    - DB_PORT
+    - DB_DATABASE
+    - DB_USERNAME
+    - DB_PASSWORD
 
 ## Database
 * Postgresql
@@ -48,7 +54,10 @@ Most of application source code.
 Sql schema migrations files. Before adding any new schema updates see https://github.com/golang-migrate/migrate/blob/master/MIGRATIONS.md (use incrementing integers versioning)
 
 ### queries
-Sql queries files.
+Sql queries files for generating code using slqc.
+
+### initdb
+Tables content initialization queries.
 
 ### tests
 Tests folder.
