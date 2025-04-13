@@ -1,0 +1,13 @@
+# Bianries
+*.exe
+*.dll
+*.so
+backend/tmp/
+main
+
+# IDE specific files
+.idea
+.vscode
+
+# .env files
+.env
