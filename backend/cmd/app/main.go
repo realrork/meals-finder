@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"os/signal"
 	"syscall"
 	"time"
 
+	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
-	"github.com/miloszbo/meals-finder/internal/routes"
+	"github.com/miloszbo/meals-finder/internal/server"
 )
 
 func gracefulShutdown(apiServer *http.Server, done chan bool) {
@@ -33,19 +35,16 @@ func gracefulShutdown(apiServer *http.Server, done chan bool) {
 }
 
 func main() {
-	server := &http.Server{
-		Addr:         ":8080",
-		Handler:      routes.SetupRoutes(),
-		IdleTimeout:  time.Minute,
-		ReadTimeout:  10 * time.Second,
-		WriteTimeout: 30 * time.Second,
-	}
+	conn := server.NewConnection()
+	defer conn.DbConn.Close(context.Background())
+
+	server := server.NewServer()
 
 	done := make(chan bool, 1)
 
 	go gracefulShutdown(server, done)
 
-	fmt.Println("Server listening on port :8080")
+	fmt.Println("Server listening on port " + os.Getenv("APP_PORT"))
 	err := server.ListenAndServe()
 	if err != nil && err != http.ErrServerClosed {
 		panic(fmt.Sprintf("http server error: %s", err))

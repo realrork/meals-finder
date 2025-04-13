@@ -1,14 +1,17 @@
 package services
 
+import "github.com/jackc/pgx/v5"
+
 type HelloWorldService struct {
-	Queries  Queries
-	Commands Commands
+	DbConn *pgx.Conn
 }
 
-type Queries struct{}
+func NewHelloWorldService(conn *pgx.Conn) HelloWorldService {
+	return HelloWorldService{
+		DbConn: conn,
+	}
+}
 
-type Commands struct{}
-
-func (q *Queries) SayHelloWorld() string {
+func (hws *HelloWorldService) SayHelloWorld() string {
 	return "Hello World"
 }
