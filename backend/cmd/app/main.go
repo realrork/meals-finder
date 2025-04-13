@@ -10,7 +10,6 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/jackc/pgx/v5"
 	_ "github.com/joho/godotenv/autoload"
 	"github.com/miloszbo/meals-finder/internal/server"
 )
@@ -36,7 +35,7 @@ func gracefulShutdown(apiServer *http.Server, done chan bool) {
 
 func main() {
 	conn := server.NewConnection()
-	defer conn.DbConn.Close(context.Background())
+	defer conn.Close(context.Background())
 
 	server := server.NewServer()
 
