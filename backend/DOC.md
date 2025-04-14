@@ -2,7 +2,7 @@
 
 ## Run Requiremnts
 * Golang 1.24.2 or higher
-* Self created .env file with fields:
+* Self created .env file (in backend folder) with fields:
     - APP_PORT
     - DB_HOST
     - DB_PORT
