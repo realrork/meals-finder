@@ -27,7 +27,7 @@ CREATE TABLE recipes (
 -- Table: reviews
 CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
-    recipe_id int NOT NULL,
+    recipe_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     review INTEGER NOT NULL,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
@@ -42,9 +42,9 @@ CREATE TABLE ingredients (
 
 -- Table: recipes_ingredients
 CREATE TABLE recipes_ingredients (
-    recipe_id int NOT NULL,
+    recipe_id INTEGER NOT NULL,
     ingredient_id INTEGER NOT NULL,
-    amount int NOT NULL,
+    amount INTEGER NOT NULL,
     unit INTEGER DEFAULT 0,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
@@ -66,7 +66,7 @@ CREATE TABLE tags (
 
 -- Table: recipes_tags
 CREATE TABLE recipes_tags (
-    recipe_id int NOT NULL,
+    recipe_id INTEGER NOT NULL,
     tag_id INTEGER NOT NULL,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
     FOREIGN KEY (tag_id) REFERENCES tags(id)
