@@ -24,6 +24,13 @@ Install command:
 ```
 go install github.com/air-verse/air@latest
 ```
+To use run:
+
+```
+air
+```
+in backend folder.
+
 ### Repository Code Generator
 sqlc: A SQL Compiler
 
@@ -34,6 +41,12 @@ Install command:
 ```
 go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
 ```
+To use run:
+
+```
+sqlc generate
+```
+in backend folder.
 
 ### Database Migrations
 golang-migrate
