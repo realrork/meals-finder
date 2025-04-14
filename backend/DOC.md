@@ -44,20 +44,26 @@ Download: https://github.com/golang-migrate/migrate/releases
 
 ## Folders
 
-### cmd
-Entry point for app, main file place.
+- ### cmd
+    Entry point for app, main file place.
 
-### internal
-Most of application source code.
+- ### internal
+    Most of application source code.
 
-### migrations
-Sql schema migrations files. Before adding any new schema updates see https://github.com/golang-migrate/migrate/blob/master/MIGRATIONS.md (use incrementing integers versioning)
+    - handlers - Handle request, delegate work and return response
+    - middlewares - Middlewares functions
+    - repositories - Sqlc generated repository pattern to communicate with database
+    - server - General purpose like: setting up routes, database connection 
+    - services - Business logic and data manipulations
 
-### queries
-Sql queries files for generating code using slqc.
+- ### migrations
+    Sql schema migrations files. Before adding any new schema updates see https://github.com/golang-migrate/migrate/blob/master/MIGRATIONS.md (use incrementing integers versioning)
 
-### initdb
-Tables content initialization queries.
+- ### queries
+    Sql queries files for generating code using slqc.
 
-### tests
-Tests folder.
+- ### initdb
+    Tables content initialization queries.
+
+- ### tests
+    Tests folder.
