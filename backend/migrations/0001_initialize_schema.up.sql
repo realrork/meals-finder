@@ -7,7 +7,7 @@ CREATE TABLE users (
     email VARCHAR(50) NOT NULL,
     name VARCHAR(40),
     surname VARCHAR(40),
-    phone VARCHAR(12) NOT NULL,
+    phone_number VARCHAR(12) NOT NULL,
     age INTEGER NOT NULL,
     sex VARCHAR(13) NOT NULL,
     weight INTEGER,
@@ -29,7 +29,7 @@ CREATE TABLE reviews (
     id SERIAL PRIMARY KEY,
     recipe_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
-    review INTEGER NOT NULL,
+    review_score INTEGER NOT NULL,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
