@@ -1,6 +1,6 @@
 -- Table: users
 CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(40) UNIQUE,
     created_at TIMESTAMP NOT NULL,
     passwd VARCHAR(40) NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE users (
 
 -- Table: recipes
 CREATE TABLE recipes (
-    id int SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(100) NOT NULL,
     synopsis VARCHAR(100) NOT NULL,
     time INTEGER NOT NULL, -- Preparation time in minutes
@@ -26,7 +26,7 @@ CREATE TABLE recipes (
 
 -- Table: reviews
 CREATE TABLE reviews (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     recipe_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     review_score INTEGER NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE reviews (
 
 -- Table: ingredients
 CREATE TABLE ingredients (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30) NOT NULL
 );
 
@@ -52,13 +52,13 @@ CREATE TABLE recipes_ingredients (
 
 -- Table: tags_types
 CREATE TABLE tags_types (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30) NOT NULL
 );
 
 -- Table: tags
 CREATE TABLE tags (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30) NOT NULL,
     type_id INTEGER NOT NULL,
     FOREIGN KEY (type_id) REFERENCES tags_types(id)
