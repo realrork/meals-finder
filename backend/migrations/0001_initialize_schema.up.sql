@@ -1,18 +1,18 @@
 -- Table: users
 CREATE TABLE users (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    username VARCHAR(40) UNIQUE,
-    created_at TIMESTAMP NOT NULL,
+    username VARCHAR(40) UNIQUE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
     passwd VARCHAR(40) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    name VARCHAR(40),
-    surname VARCHAR(40),
+    name VARCHAR(40) DEFAULT '',
+    surname VARCHAR(40) DEFAULT '',
     phone_number VARCHAR(12) NOT NULL,
     age INTEGER NOT NULL,
     sex VARCHAR(13) NOT NULL,
-    weight INTEGER,
-    height INTEGER,
-    BMI INTEGER
+    weight INTEGER DEFAULT 0,
+    height INTEGER DEFAULT 0,
+    BMI INTEGER DEFAULT 0
 );
 
 -- Table: recipes
