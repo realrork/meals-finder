@@ -55,6 +55,13 @@ Github: https://github.com/golang-migrate/migrate
 
 Download: https://github.com/golang-migrate/migrate/releases
 
+To run use:
+
+
+```
+migrate -path migrations -database "postgres://{username}:{password}@{host}:{port}/{database}?sslmode=disable" {command} {version}
+```
+in backend folder.
 ## Folders
 
 - ### cmd
