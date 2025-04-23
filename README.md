@@ -7,3 +7,4 @@ App for finding recipes.
 - Dominik Niedostatkiewicz
 - Kacper Gorlewicz
 - Karol Chruzik
+- Marcin Dulik
