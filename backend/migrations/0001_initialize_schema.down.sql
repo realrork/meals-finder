@@ -1,15 +1,15 @@
-DROP TABLE users;
+DROP TABLE IF EXISTS users CASCADE;
 
-DROP TABLE recipes;
+DROP TABLE IF EXISTS recipes CASCADE;
 
-DROP TABLE reviews;
+DROP TABLE IF EXISTS reviews CASCADE;
 
-DROP TABLE ingredients;
+DROP TABLE IF EXISTS ingredients CASCADE;
 
-DROP TABLE recipes_ingredients;
+DROP TABLE IF EXISTS recipes_ingredients CASCADE;
 
-DROP TABLE tags_types;
+DROP TABLE IF EXISTS tags_types CASCADE;
 
-DROP TABLE tags;
+DROP TABLE IF EXISTS tags CASCADE;
 
-DROP TABLE recipes_tags;
+DROP TABLE IF EXISTS recipes_tags CASCADE;
