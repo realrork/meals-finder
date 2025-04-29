@@ -1,5 +1,5 @@
 -- Table: users
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(40) UNIQUE NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
@@ -16,7 +16,7 @@ CREATE TABLE users (
 );
 
 -- Table: recipes
-CREATE TABLE recipes (
+CREATE TABLE IF NOT EXISTS recipes (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(100) NOT NULL,
     synopsis VARCHAR(100) NOT NULL,
@@ -25,7 +25,7 @@ CREATE TABLE recipes (
 );
 
 -- Table: reviews
-CREATE TABLE reviews (
+CREATE TABLE IF NOT EXISTS reviews (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     recipe_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
@@ -35,13 +35,13 @@ CREATE TABLE reviews (
 );
 
 -- Table: ingredients
-CREATE TABLE ingredients (
+CREATE TABLE IF NOT EXISTS ingredients (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30) NOT NULL
 );
 
 -- Table: recipes_ingredients
-CREATE TABLE recipes_ingredients (
+CREATE TABLE IF NOT EXISTS recipes_ingredients (
     recipe_id INTEGER NOT NULL,
     ingredient_id INTEGER NOT NULL,
     amount INTEGER NOT NULL,
@@ -51,13 +51,13 @@ CREATE TABLE recipes_ingredients (
 );
 
 -- Table: tags_types
-CREATE TABLE tags_types (
+CREATE TABLE IF NOT EXISTS tags_types (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30) NOT NULL
 );
 
 -- Table: tags
-CREATE TABLE tags (
+CREATE TABLE IF NOT EXISTS tags (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name VARCHAR(30) NOT NULL,
     type_id INTEGER NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE tags (
 );
 
 -- Table: recipes_tags
-CREATE TABLE recipes_tags (
+CREATE TABLE IF NOT EXISTS recipes_tags (
     recipe_id INTEGER NOT NULL,
     tag_id INTEGER NOT NULL,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
