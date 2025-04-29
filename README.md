@@ -14,3 +14,5 @@ App for finding recipes.
 - Marcin Dulik
 ### Designer
 - Marcin Dulik
+### Data Steward
+- Sebastian Pogoda
