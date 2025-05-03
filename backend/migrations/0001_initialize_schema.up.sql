@@ -2,17 +2,17 @@
 CREATE TABLE users (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     username VARCHAR(40) UNIQUE NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(0),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
     passwdhash VARCHAR(60) NOT NULL,
     email VARCHAR(50) NOT NULL,
-    name VARCHAR(40) DEFAULT '',
-    surname VARCHAR(40) DEFAULT '',
+    name VARCHAR(40) NOT NULL DEFAULT '',
+    surname VARCHAR(40) NOT NULL DEFAULT '',
     phone_number VARCHAR(12) NOT NULL,
     age INTEGER NOT NULL,
     sex VARCHAR(13) NOT NULL,
-    weight INTEGER DEFAULT 0,
-    height INTEGER DEFAULT 0,
-    BMI INTEGER DEFAULT 0
+    weight INTEGER NOT NULL DEFAULT 0,
+    height INTEGER NOT NULL DEFAULT 0,
+    BMI INTEGER NOT NULL DEFAULT 0
 );
 
 -- Table: recipes
@@ -45,7 +45,7 @@ CREATE TABLE recipes_ingredients (
     recipe_id INTEGER NOT NULL,
     ingredient_id INTEGER NOT NULL,
     amount INTEGER NOT NULL,
-    unit INTEGER DEFAULT 0,
+    unit INTEGER NOT NULL DEFAULT 0,
     FOREIGN KEY (recipe_id) REFERENCES recipes(id),
     FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)
 );
