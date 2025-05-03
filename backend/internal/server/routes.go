@@ -5,6 +5,7 @@ import (
 
 	"github.com/miloszbo/meals-finder/internal/handlers"
 	"github.com/miloszbo/meals-finder/internal/middlewares"
+	"github.com/miloszbo/meals-finder/internal/services"
 )
 
 func SetupRoutes() http.Handler {
@@ -12,9 +13,12 @@ func SetupRoutes() http.Handler {
 
 	conn := NewConnection()
 
-	helloWorldHandler := handlers.NewHelloWorldHandler(conn)
+	userService := services.NewBaseUserService(conn)
+	userHandler := handlers.UserHandler{
+		UserService: &userService,
+	}
 
-	mux.HandleFunc("GET /", helloWorldHandler.Greetings)
+	mux.HandleFunc("GET /user/login", userHandler.LoginUser)
 
 	return middlewares.Logging(mux)
 }

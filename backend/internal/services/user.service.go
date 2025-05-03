@@ -2,7 +2,7 @@ package services
 
 import (
 	"context"
-	"errors"
+	"log"
 	"os"
 	"time"
 
@@ -16,32 +16,42 @@ import (
 
 var key string = os.Getenv("APP_JWT_KEY")
 
-type UserService struct {
+type UserService interface {
+	LoginUser(ctx context.Context, loginData *models.LoginUserRequest) (string, error)
+}
+
+type BaseUserService struct {
 	DbConn *pgx.Conn
 	Repo   *repository.Queries
 }
 
-func NewUserService(conn *pgx.Conn) UserService {
-	return UserService{
+func NewBaseUserService(conn *pgx.Conn) BaseUserService {
+	return BaseUserService{
 		DbConn: conn,
 		Repo:   repository.New(conn),
 	}
 }
 
-func (s *UserService) LoginUser(ctx context.Context, loginData *models.LoginUserRequest) error {
+func (s *BaseUserService) LoginUser(ctx context.Context, loginData *models.LoginUserRequest) (string, error) {
 	user, err := s.Repo.LoginUserWithUsername(ctx, loginData.Login)
 	if err != nil {
-		return errors.New("Wrong username or password.")
+		return "", ErrUnauthorizedUser
 	}
 
 	if err := bcrypt.CompareHashAndPassword([]byte(user.Passwdhash), []byte(loginData.Password)); err != nil {
-		return errors.New("Wrong username or password")
+		return "", ErrUnauthorizedUser
 	}
 
-	return nil
+	token, err := s.generateJWT(user.Username)
+	if err != nil {
+		log.Println(err.Error())
+		return "", ErrInternalFailure
+	}
+
+	return token, nil
 }
 
-func (s *UserService) GenerateJWT(username string) (string, error) {
+func (s *BaseUserService) generateJWT(username string) (string, error) {
 	t := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"sub": username,
