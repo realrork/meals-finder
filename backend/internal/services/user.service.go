@@ -60,3 +60,9 @@ func (s *BaseUserService) generateJWT(username string) (string, error) {
 		})
 	return t.SignedString(key)
 }
+
+type MockUserService struct{}
+
+func (s *MockUserService) LoginUser(ctx context.Context, loginData *models.LoginUserRequest) (string, error) {
+	return "token", nil
+}
