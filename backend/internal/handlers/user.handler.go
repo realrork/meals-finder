@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/miloszbo/meals-finder/internal/handlers"
 	"github.com/miloszbo/meals-finder/internal/models"
 	"github.com/miloszbo/meals-finder/internal/services"
 )
@@ -22,7 +21,7 @@ func (u *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 
 	if err := json.NewDecoder(r.Body).Decode(loginData); err != nil {
 		log.Println(err.Error())
-		err := handlers.ErrBarRequest
+		err := ErrBadRequest
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}

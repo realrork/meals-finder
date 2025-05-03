@@ -7,7 +7,7 @@ import (
 	"github.com/miloszbo/meals-finder/internal/services"
 )
 
-var ErrBarRequest = errors.New("bad request")
+var ErrBadRequest = errors.New("bad request")
 
 func StatusFromError(err error) int {
 	status := http.StatusInternalServerError
