@@ -1,0 +1,47 @@
+package handlers
+
+import (
+	"context"
+	"encoding/json"
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/miloszbo/meals-finder/internal/models"
+	"github.com/miloszbo/meals-finder/internal/services"
+)
+
+type UserHandler struct {
+	UserService services.UserService
+}
+
+func (u *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
+	ctx := context.Background()
+	loginData := &models.LoginUserRequest{}
+
+	if err := json.NewDecoder(r.Body).Decode(loginData); err != nil {
+		log.Println(err.Error())
+		err := ErrBadRequest
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	token, err := u.UserService.LoginUser(ctx, loginData)
+	if err != nil {
+		http.Error(w, err.Error(), StatusFromError(err))
+		return
+	}
+
+	cookie := &http.Cookie{
+		Name:     "auth_token",
+		Value:    token,
+		Expires:  time.Now().Add(24 * time.Hour),
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteStrictMode,
+	}
+
+	http.SetCookie(w, cookie)
+
+	w.WriteHeader(http.StatusOK)
+}
