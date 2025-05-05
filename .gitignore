@@ -4,6 +4,7 @@
 *.so
 backend/tmp/
 main
+tmp/
 
 # IDE specific files
 .idea
