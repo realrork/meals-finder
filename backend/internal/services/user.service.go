@@ -14,7 +14,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-var key string = os.Getenv("APP_JWT_KEY")
+var key []byte = []byte(os.Getenv("APP_JWT_KEY"))
 
 type UserService interface {
 	LoginUser(ctx context.Context, loginData *models.LoginUserRequest) (string, error)
