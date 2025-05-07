@@ -64,5 +64,11 @@ func (s *BaseUserService) generateJWT(username string) (string, error) {
 type MockUserService struct{}
 
 func (s *MockUserService) LoginUser(ctx context.Context, loginData *models.LoginUserRequest) (string, error) {
-	return "token", nil
+	t := jwt.NewWithClaims(jwt.SigningMethodHS256,
+		jwt.MapClaims{
+			"sub": "testUser",
+			"exp": time.Now().Add(24 * time.Hour).Unix(),
+			"iat": time.Now().Unix(),
+		})
+	return t.SignedString(key)
 }
