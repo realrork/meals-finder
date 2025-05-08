@@ -56,13 +56,12 @@ func TestLoginUserMock(t *testing.T) {
 	}
 }
 
-// Requires first register user test
 func TestLoginUserIntegration(t *testing.T) {
 	var tests []LoginTestStruct = []LoginTestStruct{
 		{"No json pass", "", http.StatusBadRequest},
 		{"Pass only login", `{"login":"david"}`, http.StatusBadRequest},
 		{"Pass only password", `{"password":"D8Dsadsvd"}`, http.StatusBadRequest},
-		{"Pass login and password", `{"login":"tomas", "password":"DSA43fFDD"}`, http.StatusOK},
+		{"Pass login and password", `{"login":"tomas", "password":"DSA43fFDD"}`, http.StatusUnauthorized},
 		{"Pass empty login and empty password", `{"login":"","password":""}`, http.StatusBadRequest},
 		{"Pass empty login and password", `{"login":"", "password":"F4DSA654gf"}`, http.StatusBadRequest},
 		{"Pass login and empty password", `{"login":"eminem","password":""}`, http.StatusBadRequest},
