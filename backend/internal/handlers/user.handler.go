@@ -26,6 +26,10 @@ func (u *UserHandler) LoginUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	if err := loginData.Validate(); err != nil {
+		http.Error(w, ErrBadRequest.Error(), http.StatusBadRequest)
+	}
+
 	token, err := u.UserService.LoginUser(ctx, loginData)
 	if err != nil {
 		http.Error(w, err.Error(), StatusFromError(err))
