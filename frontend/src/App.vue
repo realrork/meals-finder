@@ -1,18 +1,44 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <NavPage v-if="currentPage === 'nav'" @go-to="setPage" />
+    <HomePage v-if="currentPage === 'home'" />
+    <LoginPage v-if="currentPage === 'login'" />
+    <RegisterPage v-if="currentPage === 'register'" />
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
+
+<script>
+import HomePage from "./pages/Home.vue"
+import LoginPage from "./pages/Login.vue"
+import RegisterPage from "./pages/Register.vue"
+import NavPage from "./pages/Nav.vue"
+
+
+export default {
+  name: 'App',
+  components: {
+    HomePage,
+    LoginPage,
+    RegisterPage,
+    NavPage
+  },
+
+  data() {
+    return {
+      currentPage: 'nav'
+    }
+  },
+  methods: {
+    setPage(page) {
+      this.currentPage = page
+    }
+  }
+}
+
+</script>
+
+
+
 
 <style scoped>
 .logo {
