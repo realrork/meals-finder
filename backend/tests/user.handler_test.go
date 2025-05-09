@@ -8,34 +8,91 @@ import (
 	"testing"
 
 	"github.com/miloszbo/meals-finder/internal/handlers"
+	repository "github.com/miloszbo/meals-finder/internal/repositories"
+	"github.com/miloszbo/meals-finder/internal/server"
 	"github.com/miloszbo/meals-finder/internal/services"
 )
 
-func TestLoginUser(t *testing.T) {
-	body := `{"login":"amanda", "password":"DSAEWQ123"}`
-	req := httptest.NewRequest(http.MethodGet, "/user/login", bytes.NewBufferString(body))
-	req.Header.Set("Content-Type", "application/json")
+type LoginTestStruct struct {
+	Name  string
+	Input string
+	Want  int
+}
 
-	w := httptest.NewRecorder()
+func TestLoginUserMock(t *testing.T) {
+	var tests []LoginTestStruct = []LoginTestStruct{
+		{"No json pass", "", http.StatusBadRequest},
+		{"Pass only login", `{"login":"david"}`, http.StatusBadRequest},
+		{"Pass only password", `{"password":"D8Dsadsvd"}`, http.StatusBadRequest},
+		{"Pass login and password", `{"login":"tomas", "password":"DSA43fFDD"}`, http.StatusOK},
+		{"Pass empty login and empty password", `{"login":"","password":""}`, http.StatusBadRequest},
+		{"Pass empty login and password", `{"login":"", "password":"F4DSA654gf"}`, http.StatusBadRequest},
+		{"Pass login and empty password", `{"login":"eminem","password":""}`, http.StatusBadRequest},
+	}
 
 	handler := handlers.UserHandler{
 		UserService: &services.MockUserService{},
 	}
 
-	handler.LoginUser(w, req)
+	for _, tt := range tests {
+		t.Run(tt.Name, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodGet, "/user/login", bytes.NewBufferString(tt.Input))
+			resp := httptest.NewRecorder()
+			handler.LoginUser(resp, req)
+			if resp.Code != tt.Want {
+				t.Errorf("got %v, want %v", resp.Code, tt.Want)
+			} else {
+				res := resp.Result()
+				defer res.Body.Close()
+				cookies := res.Cookies()
+				if len(cookies) != 0 {
+					fmt.Println(tt.Name)
+					for _, c := range cookies {
+						fmt.Printf("Cookie: %s\nValue: %s\n", c.Name, c.Value)
+					}
+				}
+			}
+		})
+	}
+}
 
-	res := w.Result()
-	defer res.Body.Close()
-
-	if res.StatusCode != http.StatusOK {
-		t.Errorf("expected status 200 OK, got %v", res.StatusCode)
+// Requires first register user test
+func TestLoginUserIntegration(t *testing.T) {
+	var tests []LoginTestStruct = []LoginTestStruct{
+		{"No json pass", "", http.StatusBadRequest},
+		{"Pass only login", `{"login":"david"}`, http.StatusBadRequest},
+		{"Pass only password", `{"password":"D8Dsadsvd"}`, http.StatusBadRequest},
+		{"Pass login and password", `{"login":"tomas", "password":"DSA43fFDD"}`, http.StatusOK},
+		{"Pass empty login and empty password", `{"login":"","password":""}`, http.StatusBadRequest},
+		{"Pass empty login and password", `{"login":"", "password":"F4DSA654gf"}`, http.StatusBadRequest},
+		{"Pass login and empty password", `{"login":"eminem","password":""}`, http.StatusBadRequest},
 	}
 
-	cookies := res.Cookies()
-	if len(cookies) == 0 {
-		t.Fatal("Expected cookie to be set, got none")
+	handler := handlers.UserHandler{
+		UserService: &services.BaseUserService{
+			DbConn: server.NewConnectionTest(),
+			Repo:   repository.New(server.NewConnectionTest()),
+		},
 	}
-	for _, c := range cookies {
-		fmt.Println(c.String())
+
+	for _, tt := range tests {
+		t.Run(tt.Name, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodGet, "/user/login", bytes.NewBufferString(tt.Input))
+			resp := httptest.NewRecorder()
+			handler.LoginUser(resp, req)
+			if resp.Code != tt.Want {
+				t.Errorf("got %v, want %v", resp.Code, tt.Want)
+			} else {
+				res := resp.Result()
+				defer res.Body.Close()
+				cookies := res.Cookies()
+				if len(cookies) != 0 {
+					fmt.Println(tt.Name)
+					for _, c := range cookies {
+						fmt.Printf("Cookie: %s\nValue: %s\n", c.Name, c.Value)
+					}
+				}
+			}
+		})
 	}
 }
